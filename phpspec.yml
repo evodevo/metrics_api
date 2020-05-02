@@ -1,0 +1,5 @@
+suites:
+  default:
+    spec_path: 'tests/'
+formatter.name: pretty
+bootstrap: tests/spec/bootstrap.php

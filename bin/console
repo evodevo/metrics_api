@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Application;
+use MetricsAPI\Infrastructure\Console\Command\GenerateReport;
+
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
+define('ROOT_PATH', dirname(__DIR__));
+
+require ROOT_PATH . '/vendor/autoload.php';
+
+$env = getenv('ENV');
+$envFile = $env === 'test' ? '.env.test' : '.env';
+$dotenv = Dotenv\Dotenv::createImmutable(ROOT_PATH . '/', $envFile);
+$dotenv->load();
+
+$containerBuilder = new ContainerBuilder();
+$loader = new YamlFileLoader($containerBuilder, new FileLocator(ROOT_PATH));
+$loader->load('config/services.yaml');
+if ($env === 'test') {
+    $loader->load('config/services_test.yaml');
+}
+
+$containerBuilder->compile(true);
+
+$application = new Application();
+
+$application->add($containerBuilder->get('MetricsAPI\Infrastructure\Console\Command\GenerateReport'));
+
+$application->run();

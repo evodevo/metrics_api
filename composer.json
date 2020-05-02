@@ -1,0 +1,27 @@
+{
+    "require": {
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "~6.0",
+        "vlucas/phpdotenv": "^4.1",
+        "symfony/console": "^4.4",
+        "symfony/dependency-injection": "^4.4",
+        "symfony/config": "^4.4",
+        "symfony/yaml": "^4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "MetricsAPI\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MetricsAPI\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "alekseytupichenkov/guzzle_stub": "^1.0",
+        "phpspec/phpspec": "^5.1",
+        "behat/behat": "^3.6"
+    }
+}

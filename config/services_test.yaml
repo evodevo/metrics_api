@@ -1,0 +1,39 @@
+
+parameters:
+  token_file: /var/storage/test_token
+
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  GuzzleHttp\Client:
+    class: MetricsAPI\Tests\Infrastructure\SupermetricsApi\StubGuzzleClient
+    arguments:
+      $fixturesFilePath: /tests/fixtures/posts.json
+      $config:
+        base_uri: '%env(SUPERMETRICS_API_BASE_URL)%'
+        timeout: 10.0
+#        handler: '@Alekseytupichenkov\GuzzleStub\Handler\StubHandler'
+
+  MetricsAPI\Infrastructure\SupermetricsApi\ApiClient:
+    class: MetricsAPI\Infrastructure\SupermetricsApi\ApiClient
+    arguments:
+      $client: '@GuzzleHttp\Client'
+
+  MetricsAPI\Infrastructure\SupermetricsApi\Authenticator:
+    class: MetricsAPI\Infrastructure\SupermetricsApi\Authenticator
+    arguments:
+      $client: '@GuzzleHttp\Client'
+
+  Alekseytupichenkov\GuzzleStub\Handler\StubHandler:
+    class: Alekseytupichenkov\GuzzleStub\Handler\StubHandler
+
+  MetricsAPI\Application\ReportGenerator:
+    public: true
+
+#  MetricsAPI\Tests\Behat\PostStatsContext:
+#    class: MetricsAPI\Tests\Behat\PostStatsContext
+#    arguments:
+#      $client: '@GuzzleHttp\Client'

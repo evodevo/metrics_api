@@ -1,0 +1,11 @@
+default:
+    suites:
+        default:
+            paths:
+                - '%paths.base%/tests/features'
+            contexts:
+                - MetricsAPI\Tests\Behat\PostStatsContext:
+                      - '@GuzzleHttp\Client'
+                      - '@MetricsAPI\Application\ReportGenerator'
+
+            services: MetricsAPI\Tests\Behat\ContainerFactory::create
