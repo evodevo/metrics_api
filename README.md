@@ -15,7 +15,7 @@ ENV=test ./vendor/bin/behat
 
 Run unit tests:
 ```
-./vendor/bin.phpspec run
+./vendor/bin/phpspec run
 ```
 
 Generate post statistics report:
